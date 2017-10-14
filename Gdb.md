@@ -113,7 +113,7 @@ To run the code from the beginning, type the following:
 The program being debugged has been started already.
 Start it from the beginning? (y	or n)  
 
-Starting program: /nfs/nfs6/home/aabhutta/forge/SOIC-C-UNIX/Spring1-2017/debugging_src/dbgme 
+Starting program: /nfs/nfs6/home/aabhutta/forge/SOIC-C-UNIX/Fall2-2017/debugging_src/dbgme 
 
 Breakpoint 1, main () at myprog.c:29
 (gdb)
@@ -281,7 +281,7 @@ Hit **r** to run to the first breakpoint. Then type **c** several times to cause
 
 ```gdb
 (gdb) r
-Starting program: /nfs/nfs6/home/aabhutta/forge/SOIC-C-UNIX/Spring1-2017/debugging_src/dbgme 
+Starting program: /nfs/nfs6/home/aabhutta/forge/SOIC-C-UNIX/Fall2-2017/debugging_src/dbgme 
 
 Breakpoint 1, main () at myprog.c:30
 Missing separate debuginfos, use: debuginfo-install glibc-2.17-106.el7_2.8.x86_64
