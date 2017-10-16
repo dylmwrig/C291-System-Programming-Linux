@@ -18,7 +18,7 @@ tutorial, make sure you're using "ssh -T git@github.iu.edu".**
 ### 1.2 Making Your Github Repository
 
 * Create a private repository on IU github called
-  **C291-Fall1-2017**. You should have read chapter 1-2 of the
+  **C291-Fall2-2017**. You should have read chapter 1-2 of the
   [Pro Git Book](https://git-scm.com/book/en/v2). You will need to
   know how to clone a repository, add files, commit them, and push
   them. Add **aabhutta**, **ranagara**, **bmerugur**, **rahpsing** as collaborators so that they
@@ -26,25 +26,25 @@ tutorial, make sure you're using "ssh -T git@github.iu.edu".**
 
 ### 1.3 Duplication of the Course Repository
 
-The [course repository](https://github.iu.edu/SOIC-C-Unix/Fall1-2017)
+The [course repository](https://github.iu.edu/SOIC-C-Unix/Fall2-2017)
 will be duplicated using the steps. 
 
 * Change directories to a scratch area. Create a bare clone of the
-  Fall1-2017 repository using:
+  Fall2-2017 repository using:
 
 ```bash
-git clone --bare git@github.iu.edu:SOIC-C-UNIX/Fall1-2017.git
+git clone --bare git@github.iu.edu:SOIC-C-UNIX/Fall2-2017.git
 ```
 
 Note: If you did not configure SSH yet, you can use the HTTP link to the repository instead (DON'T DO BOTH)
 ```bash
-git clone --bare https://github.iu.edu/SOIC-C-UNIX/Fall1-2017.git
+git clone --bare https://github.iu.edu/SOIC-C-UNIX/Fall2-2017.git
 ```
 
-* Enter the Fall1-2017.git directory
+* Enter the Fall2-2017.git directory
 
 ```bash
-cd Fall1-2017.git
+cd Fall2-2017.git
 ```
 
 * Push this repo data to your new repository replacing **yourreponame** with the appropriate git@github.iu.edu address or http address from step 1.2. You can find the exact address by clicking on the green "clone or download" button in your repository on gitHub site. 
@@ -53,11 +53,11 @@ cd Fall1-2017.git
 git push --mirror yourreponame
 ```
 
-* If all went well and your shared repository has the data, you can remove the Fall1-2017.git directory because it is no longer needed.
+* If all went well and your shared repository has the data, you can remove the Fall2-2017.git directory because it is no longer needed.
 
 ```bash
 cd ..
-rm -rf Fall1-2017.git
+rm -rf Fall2-2017.git
 ```
 
 ### 1.4) Remote Setup
@@ -67,14 +67,14 @@ remote for your repository. This repository will be updated
 periodically with new lab material. Adding an upstream remote will
 allow you to keep your copy synchronized with updated lab material.
 
-* Clone your **C291-Fall1-2017** to your home directory.
+* Clone your **C291-Fall2-2017** to your home directory.
 ```bash
 git clone yourreponame
 ```
-* cd into the C291-Fall1-2017 directory. Add an upstream remote to your repository. Be sure to use the correct repo link/name.
+* cd into the C291-Fall2-2017 directory. Add an upstream remote to your repository. Be sure to use the correct repo link/name.
 
 ```bash
-git remote add upstream git@github.iu.edu:SOIC-C-Unix/Fall1-2017.git
+git remote add upstream git@github.iu.edu:SOIC-C-Unix/Fall2-2017.git
 ```
 
 * In the future, you can pull in updates to the course repository using a fetch command.
