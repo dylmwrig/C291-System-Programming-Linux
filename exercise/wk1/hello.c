@@ -1,16 +1,23 @@
-/* main.c --- 
- *
- * Filename: main.c
- * Description: Basic C program to print out hello world! 
- * Author: Adeel Bhutta
- *
-*/
+/*
+ * hello.c
+ * Dylan Wright
+ * assignment 1 for systems programming 
+ * print hello world, then print a . every two seconds, on the same line
+ * */
 
+
+#include <stdbool.h>
 #include <stdio.h>
+#include <unistd.h>
 
-int main(void) {
+int main()
+{
   printf("Hello World!\n");
-  return(0); 
-}
-
-
+  while (true)
+  {
+    sleep(1);
+    printf(".");
+    fflush(stdout); //flush the stream to print properly
+  } //end while
+  return(0);
+} //end main
