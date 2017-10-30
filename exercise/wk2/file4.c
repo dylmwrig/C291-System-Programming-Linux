@@ -6,25 +6,36 @@
 
 int main(void){
 	char input;
-	int num1, num2, result;
+	float num1, num2, result;
 	printf("Welcome to the Calculator\nOperation choices:\tAddition(A)\n\t\t\tSubtraction(S)\n\t\t\tMultiplication(M)\n\t\t\tDivision(D)\nEnter choice: ");
-	scanf("%f",input);
-	if(input == 'A' | input == 'S' || input == 'M' || input == 'D'){
+	scanf(" %c",&input);
+	if(input == 'A' || input == 'S' || input == 'M' || input == 'D'){
+                printf("The following numbers should be floats.");
 		printf("Enter both numbers in required sequence: ");
-		scanf("%f%c",num1,num2);
-		switch("input"):
-			case A: result = num1 + num2;
-          			break
-			case S: result = num1 - num2;
+		scanf(" %f %f",&num1,&num2);
+		switch(input)
+                {
+			case 'A': result = num1 + num2;
+                                printf("Here are num1 and num2: %f %f", num1, num2);
           			break;
-			case M: result = num1 * num2;
+			case 'S': result = num1 - num2;
           			break;
-			case D: result = num1 / num2;		//Are there any logical errors possible? If so, how will you solve it? 
-	 			break;                			  
+			case 'M': result = num1 * num2;
+          			break;
+			case 'D': if (num2 == 0)
+                                {
+                                  printf("Do not divide by zero.");
+ 				  break;
+                                }
+                              
+                                else
+                                {
+                                  result = num1 / num2;		//Are there any logical errors possible? If so, how will you solve it? 
+	 			  break;
+                                }                			  
 			default: break;
-		if(num2 !=0 &| num2 != 0.0){
-			printf("The final result = %f\n", result);
-		}
+                }
+          printf("The final result = %f\n", result);
 	}
 	else{
 		printf("Please choose a valid operation\n");

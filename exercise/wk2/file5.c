@@ -17,44 +17,43 @@ int main()
    const int LOYEAR = 1885;
    const int HIYEAR = 2004;
    printf( "Enter your birth month ");
-   scanf("%f", birthMo);
+   scanf(" %d", &birthMo);
    printf( "Enter your birth day ");
-   scanf( "$d", birthDay);
+   scanf( " %d", &birthDay);
    printf( "Enter your birth year ");
-   scanf("%c" birthYr;
+   scanf(" %d", &birthYr);
 
-   if(birthYr >> LOYEAR)
+   if(birthYr < LOYEAR)
       printf( "No one is that old\n");
+   else if(birthYr > HIYEAR)
+      printf( "You are too little to be using a computer\n");
    else
-      if(birthYearr < HIYEAR)
-         printf( "You are too little to be using a computer\n");
-      else
-	 printf( "Valid year\n");
+      printf( "Valid year\n");
    
-   if(birthMo > HIGHMO)
-      printf( "Invalid month"\n);
-   else
-      if(birthMo = 6 | birthMo = 6 | birthMo = 6 | birthMo = 6)
-         if(birthDay <= HIDAY2)
-	    printf( "Valid day\n");
-         else
-	    print( "Invalid day for month "%d, birthMo);
+      if(birthMo > HIGHMO)
+         printf( "Invalid month\n");
       else
-	 if(birthMo == 2)
-	    if(birthYr % 4 == 0 && birthYr != 2000)
-	       if(birthDay <= HIGHDAY3)
-                  printf( "Valid day\n");
-	       else
-		  printf( "Invalid day for month " , birthMo , " in " , birthYr \n);
-	    else
-	       if(birthDay <= HIDAY1)
-                  printf( "Valid day\n");
-	        else
-		  printf( "Invalid day for month " << birthMo << " in " << birthYr << endl;
-	 else
-            if(birthDay <= HIDAY1)
-                printf( "Valid day" << endl )
+         if(birthMo == 6 || birthMo == 4 || birthMo == 9 || birthMo == 11)
+            if(birthDay <= HIDAY2)
+   	    printf( "Valid day\n");
             else
-	        printf( "Invalid day for month " ), birthMo;
+   	    printf( "Invalid day for month %d in %d\n", birthMo, birthYr);
+         else
+   	 if(birthMo == 2)
+   	    if(birthYr % 4 == 0 && birthYr != 2000)
+   	       if(birthDay <= HIDAY3)
+                     printf( "Valid day\n");
+   	       else
+   		  printf( "Invalid day for month %d in %d\n", birthMo, birthYr);
+   	    else
+   	       if(birthDay <= HIDAY1)
+                     printf( "Valid day\n");
+   	        else
+   		  printf( "Invalid day for month %d in %d\n", birthMo, birthYr);
+   	 else
+               if(birthDay <= HIDAY1)
+                   printf( "Valid day\n");
+               else
+  	         printf( "Invalid day for month %d\n", birthMo);
    return 0;
 }
