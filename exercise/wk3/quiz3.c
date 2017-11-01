@@ -24,22 +24,46 @@
 
 #include<stdio.h>
 
+//take in an array of number grades
+//print letter grades corresponding to each number
+void printGrade(int marks)
+{
+  if (marks > 100)
+  {
+    printf("Invalid");
+  } //end if
+
+  else if (marks > 90)
+  {
+    printf("You got an A!");
+  } //end else if
+
+  else if (marks > 80)
+  {
+    printf("You got a B!");
+  } //end else if
+
+  else if (marks > 70)
+  {
+    printf("You got a C!");
+  } //end else if
+
+  else
+  {
+    printf("You got an F :(");
+  } //end else
+} //end printGrade
+
 int main(void){
 
 	char ch;
+        int marks;
 	do{
 		printf("Enter marks:" );
+                scanf(" %d",&marks);
 		printGrade(marks);
 		printf("\nDo you want to continue? (Y/N)");
 		scanf(" %c",&ch); //do not modify this.
 	}while(ch == 'y'|| ch == 'Y');
 	return 0;
 }
-
-
-
-
-
-
-
-
