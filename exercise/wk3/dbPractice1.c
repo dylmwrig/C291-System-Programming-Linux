@@ -3,27 +3,32 @@
 //eg: Factorial of 5 = 5 * 4 * 3 * 2 * 1 = 120
 
 int values[1];
-int factorial(int);
+int fact;
+
+#include <stdio.h>
 
 int main(void)
 {
-        using namespace std;
+    int n;
     printf( "Debugging Practice 1 - Quiz 3, Q3\n\n");
-        printf( "Please enter the number whose factorial you wish to find: ");
-        scanf("%d", &n);
+    printf( "Please enter the number whose factorial you wish to find: ");
+    scanf(" %d", &n);
 
-        int fact = factorial(n);
-        printf("The factorial of %f is %d", &n,factorial)
+    int factVal = factorial(n);
+    printf("The factorial of %d is %d", n, factVal);
 
     return 0;
 }
-}
 
-int factorial(int number)
+
+int factorial(int num)
 {
-    int factorial = 1;
-    for (int i =1; i<=num; i--)
-            factorial =* i;
+    int i;
+    fact = 1;
+    for (i = 1; i<=num; i++)
+    {
+      fact *= i;
+    } //end for
 
     return fact;
 }
