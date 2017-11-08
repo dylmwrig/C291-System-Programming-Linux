@@ -32,19 +32,21 @@ void move(int board[100][1000], int posX, int posY, int moveNum, int direction, 
 {
   int endX = posX;
   int endY = posY;
-  if (direction == 1)
+
+  printf("Direction: %d", direction);
+  if (direction == 1) //right
   {
     endX += moveNum;
     if (penDown)
     {
-      for (posX; posX > endX; posX++)
+      for (posX; posX < endX; posX++)
       {
         board[posX][posY] = 1;
       } //end for
     } //end if
   } //end if
 
-  else if (direction == 2)
+  else if (direction == 2) //down
   { 
     endY += moveNum;
     if (penDown)
@@ -56,9 +58,14 @@ void move(int board[100][1000], int posX, int posY, int moveNum, int direction, 
     } //end if
   } //end else if
 
-  else if (direction == 3)
+  else if (direction == 3) //left
   {
     endX -= moveNum;
+    if (endX < 0) //disallow negative values
+    {
+      endX = 0; 
+    } //end if
+
     if (penDown)
     {
       for (posX; posX > endX; posX--)
@@ -68,9 +75,14 @@ void move(int board[100][1000], int posX, int posY, int moveNum, int direction, 
     } //end if
   } //end else if
 
-  else if (direction == 4)
+  else if (direction == 4) //up
   {
     endY -= moveNum;
+    if (endY < 0) //disallow negative values
+    {
+      endY = 0;
+    } //end if
+
     if (penDown)
     {
       for (posY; posY > endY; posY--)
@@ -88,18 +100,19 @@ void printBoard(int board[100][1000], int positionX, int positionY)
 {
   //check that the position is within bounds
   //we're printing 50x50 so do these checks to avoid seg faults
-  if (positionX > 49)
+  if (positionX > 50)
   {
-    positionX = 49;
+    positionX = 50;
   } //end if
 
-  if (positionY > 949)
+  if (positionY > 950)
   {
-    positionY = 949;
+    positionY = 950;
   } //end if
 
-  int endX = (positionX + 50), endY = (positionY + 50), startX = positionX;
+  int endX = (positionX + 49), endY = (positionY + 49), startX = positionX;
 
+  printf("\n");
   for (positionY; positionY < endY; positionY++)
   { 
     for (positionX; positionX < endX; positionX++)
@@ -108,8 +121,13 @@ void printBoard(int board[100][1000], int positionX, int positionY)
       {
         printf("*");
       } //end if
+  
+      else
+      {
+        printf(" ");
+      } //end if
     } //end for
-    positionX = startX;
+    positionX = startX; //reset sentry variable
     printf("\n");
   } //end for
 } //end printBoard
@@ -134,7 +152,14 @@ int main()
 
   while (choice != 9)
   {
-    printf("Enter command (9 to end input): ");
+    printf("Enter command:\n"
+           "1 pen up \n"
+           "2 pen down\n"
+           "3 turn right\n"
+           "4 turn left\n"
+           "5, x move in current direction by x spaces\n"
+           "6 print the 50-by-50 array\n"
+           "9 halt input and print everything\n");
     scanf(" %s", &input);
     if (input[0] == '5')
     {
@@ -162,15 +187,15 @@ int main()
       choice = (input[0] - '0'); //standard way to convert char to int in c
       if (choice == 1)
       {
-        penDown = true;
+        penDown = false;
       } //end if
   
       else if (choice == 2)
       {
-        penDown = false;
+        penDown = true;
       } //end else if
   
-      else if (choice == 3)
+      else if (choice == 3) //turn right, each right turn adds one to direction
       {
         if (direction == 4)
         {
@@ -181,11 +206,9 @@ int main()
         {
           direction++;
         } //end else
-
-        printf("Direction is: %d", direction);
       } //end else if
   
-      else if (choice == 4)
+      else if (choice == 4) //turn left, each left turn subtracts one from direction
       {
         if (direction == 1)
         {
@@ -205,5 +228,7 @@ int main()
     } //end else
   } //end while 
  
+  printBoard(board, positionX, positionY);
+
   return 0;
 } //end main
