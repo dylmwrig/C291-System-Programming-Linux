@@ -89,8 +89,70 @@ void move(int board[100][1000], int posX, int posY, int moveNum, int direction, 
         board[posX][posY] = 1;
       } //end for
     } //end if
-  } //end else
+  } //end else if
 
+  //
+  //diagonal functionality
+  //
+  else if (direction == 5) //up right
+  {
+    endX += moveNum;
+    endY -= moveNum;
+
+    if (penDown)
+    {
+      for (posY; posY > endY; posY--)
+      {
+        posX++;
+        board[posX][posY] = 1;
+      } //end for
+    } //end if
+  } //end else if
+
+  else if (direction == 6) //down right
+  {
+    endX += moveNum;
+    endY += moveNum;
+
+    if (penDown)
+    {
+      for (posY; posY < endY; posY++)
+      {
+        posX++;
+        board[posX][posY] = 1;
+      } //end for
+    } //end if
+  } //end else if
+
+  else if (direction == 7) //down left
+  {
+    endX -= moveNum;
+    endY += moveNum;
+
+    if (penDown)
+    {
+      for (posY; posY < endY; posY++)
+      {
+        posX--;
+        board[posX][posY] = 1;
+      } //end for
+    } //end if
+  } //end else if
+
+  else if (direction == 8) //up left
+  {
+    endX -= moveNum;
+    endY -= moveNum;
+
+    if (penDown)
+    {
+      for (posY; posY > endY; posY--)
+      {
+        posX--;
+        board[posX][posY] = 1;
+      } //end for
+    } //end if
+  } //end else if
   position[0] = endX;
   position[1] = endY;
 } //end move
@@ -137,7 +199,8 @@ void drawShape(int board[100][1000])
   int choice;
   printf("What shape would you like to draw?\n"
          "1 - square\n"
-         "2 - rectangle\n");
+         "2 - rectangle\n"
+         "3 - diamond\n");
   scanf(" %d", &choice);
   if (choice == 1)
   {
@@ -168,7 +231,21 @@ void drawShape(int board[100][1000])
     move(board, pos[0], pos[1], height, 4, true, pos);
     
     printBoard(board, 0, 0);
+  } //end else if
+ 
+  else if (choice == 3)
+  {
+    printf("\nWhat width would you like?\n");
+    scanf(" %d", &choice);
+    int pos[2];
+    move(board, choice, 0, choice, 6, true, pos);
+    move(board, pos[0], pos[1], choice, 7, true, pos);
+    move(board, pos[0], pos[1], choice, 8, true, pos);
+    move(board, pos[0], pos[1], choice, 5, true, pos);
+    
+    printBoard(board, 0, 0);
   } //end if
+
 } //end drawShape
 
 int main()
