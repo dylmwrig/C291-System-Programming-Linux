@@ -26,10 +26,62 @@
  * move the turtle
  * moveNum represents the amount of spaces to move
  * direction is the direction turtle is facing (1 = right, 2 = down, 3 = left, 4 = up)
+ * position[2] is essentially the return, just fill it with the resulting x and y position
  */
-void move(int board[100][1000], int moveNum, int direction, bool penDown)
+void move(int board[100][1000], int posX, int posY, int moveNum, int direction, bool penDown, int * position)
 {
+  int endX = posX;
+  int endY = posY;
+  if (direction == 1)
+  {
+    endX += moveNum;
+    if (penDown)
+    {
+      for (posX; posX > endX; posX++)
+      {
+        board[posX][posY] = 1;
+      } //end for
+    } //end if
+  } //end if
 
+  else if (direction == 2)
+  { 
+    endY += moveNum;
+    if (penDown)
+    {
+      for (posY; posY < endY; posY++)
+      {
+        board[posX][posY] = 1;
+      } //end for
+    } //end if
+  } //end else if
+
+  else if (direction == 3)
+  {
+    endX -= moveNum;
+    if (penDown)
+    {
+      for (posX; posX > endX; posX--)
+      {
+        board[posX][posY] = 1;
+      } //end for
+    } //end if
+  } //end else if
+
+  else if (direction == 4)
+  {
+    endY -= moveNum;
+    if (penDown)
+    {
+      for (posY; posY > endY; posY--)
+      {
+        board[posX][posY] = 1;
+      } //end for
+    } //end if
+  } //end else
+
+  position[0] = endX;
+  position[1] = endY;
 } //end move
 
 void printBoard(int board[100][1000], int positionX, int positionY)
@@ -52,7 +104,10 @@ void printBoard(int board[100][1000], int positionX, int positionY)
   { 
     for (positionX; positionX < endX; positionX++)
     {
-      printf("%d", board[positionX][positionY]);
+      if (board[positionX][positionY] == 1)
+      {
+        printf("*");
+      } //end if
     } //end for
     positionX = startX;
     printf("\n");
@@ -89,8 +144,6 @@ int main()
       printf(" %s", input);
       while (isdigit(input[parseIndex]))
       {
-        printf("here is the char %c \n", input[parseIndex]);
-        printf("Digit: %c \n", input[parseIndex]);
         toMove[moveIndex] = input[parseIndex];
         parseIndex++;
         moveIndex++;
@@ -98,49 +151,58 @@ int main()
 
       int moveNum = atoi(toMove);
 
-      move(board, moveNum, direction, penDown);
+      int newPos[2];
+      move(board, positionX, positionY, moveNum, direction, penDown, newPos);
+      positionX = newPos[0];
+      positionY = newPos[1];
     } //end if 
 
-    if (choice == 1)
+    else
     {
-      penDown = true;
-    } //end if
-
-    else if (choice == 2)
-    {
-      penDown = false;
-    } //end else if
-
-    else if (choice == 3)
-    {
-      if (direction == 4)
+      choice = (input[0] - '0'); //standard way to convert char to int in c
+      if (choice == 1)
       {
-        direction = 1;
+        penDown = true;
       } //end if
-
-      else
+  
+      else if (choice == 2)
       {
-        direction++;
-      } //end else
-    } //end else if
-
-    else if (choice == 4)
-    {
-      if (direction == 1)
+        penDown = false;
+      } //end else if
+  
+      else if (choice == 3)
       {
-        direction = 4;
-      } //end if
+        if (direction == 4)
+        {
+          direction = 1;
+        } //end if
+  
+        else
+        {
+          direction++;
+        } //end else
 
-      else
+        printf("Direction is: %d", direction);
+      } //end else if
+  
+      else if (choice == 4)
       {
-        direction--;
-      } //end else
-    } //end else if
-
-    else if (choice == 6)
-    {
-      printBoard(board, positionX, positionY);
-    } //end else if
+        if (direction == 1)
+        {
+          direction = 4;
+        } //end if
+  
+        else
+        {
+          direction--;
+        } //end else
+      } //end else if
+  
+      else if (choice == 6)
+      {
+        printBoard(board, positionX, positionY);
+      } //end else if
+    } //end else
   } //end while 
  
   return 0;
