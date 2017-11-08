@@ -24,7 +24,7 @@
 
 #include<stdio.h>
 
-//take in an array of number grades
+//take in a grade number value
 //print letter grades corresponding to each number
 void printGrade(int marks)
 {
@@ -48,6 +48,7 @@ void printGrade(int marks)
     printf("You got a C!");
   } //end else if
 
+  //everything at or below a 70 should be considered a failure
   else
   {
     printf("You got an F :(");
@@ -58,6 +59,7 @@ int main(void){
 
 	char ch;
         int marks;
+        //continue to take inputs while the user says "yes"
 	do{
 		printf("Enter marks:" );
                 scanf(" %d",&marks);
