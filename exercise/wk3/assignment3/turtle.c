@@ -33,7 +33,6 @@ void move(int board[100][1000], int posX, int posY, int moveNum, int direction, 
   int endX = posX;
   int endY = posY;
 
-  printf("Direction: %d", direction);
   if (direction == 1) //right
   {
     endX += moveNum;
@@ -132,6 +131,46 @@ void printBoard(int board[100][1000], int positionX, int positionY)
   } //end for
 } //end printBoard
 
+//additional functionality, draw a shape
+void drawShape(int board[100][1000])
+{
+  int choice;
+  printf("What shape would you like to draw?\n"
+         "1 - square\n"
+         "2 - rectangle\n");
+  scanf(" %d", &choice);
+  if (choice == 1)
+  {
+    printf("\nWhat width would you like for each side?\n");
+    scanf(" %d", &choice);
+    int moveNum = choice;
+    int pos[2];
+    move(board, 0, 0, moveNum, 1, true, pos);
+    move(board, pos[0], pos[1], moveNum, 2, true, pos);
+    move(board, pos[0], pos[1], moveNum, 3, true, pos);
+    move(board, pos[0], pos[1], moveNum, 4, true, pos);
+    
+    printBoard(board, 0, 0);
+  } //end if
+ 
+  else if (choice == 2)
+  {
+    printf("\nWhat width would you like?\n");
+    scanf(" %d", &choice);
+    int width = choice;
+    printf("\nWhat height would you like?\n");
+    scanf(" $d", &choice);
+    int height = choice;
+    int pos[2];
+    move(board, 0, 0, width, 1, true, pos);
+    move(board, pos[0], pos[1], height, 2, true, pos);
+    move(board, pos[0], pos[1], width, 3, true, pos);
+    move(board, pos[0], pos[1], height, 4, true, pos);
+    
+    printBoard(board, 0, 0);
+  } //end if
+} //end drawShape
+
 int main()
 {
   //track the turtle's current position
@@ -159,6 +198,7 @@ int main()
            "4 turn left\n"
            "5, x move in current direction by x spaces\n"
            "6 print the 50-by-50 array\n"
+           "7 draw a shape\n"
            "9 halt input and print everything\n");
     scanf(" %s", &input);
     if (input[0] == '5')
@@ -224,6 +264,11 @@ int main()
       else if (choice == 6)
       {
         printBoard(board, positionX, positionY);
+      } //end else if
+
+      else if (choice == 7)
+      {
+        drawShape(board);
       } //end else if
     } //end else
   } //end while 
