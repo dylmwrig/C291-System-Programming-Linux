@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define SUITS 4
 #define FACES 13
@@ -21,6 +22,8 @@ void deal(unsigned int wDeck[][FACES], const char *wFace[],
 void findVal(const char *wFace[], const char *wSuit[], int * rows, int * columns)
 {
   int i = 0, j = 0, suitCount = 0, bestCount = 0;
+  bool twoPair = false; 
+  int existingPairIndex = -1; //when a pair is found, mark it, in the case that there is a second pair
   //count the amount of cards with the same suit, card by card
   //because each card will count itself as matching the same suit, simply count a pair as suitCount = 2, three of a kind as suitCount = 3, etc
   for (i; i < CARDS; i++)
@@ -34,10 +37,35 @@ void findVal(const char *wFace[], const char *wSuit[], int * rows, int * columns
         if(strcmp(wSuit[rows[i]], wSuit[rows[j]]) == 0)
         {
           suitCount++;
+          printf("\nSuitcount: %d", suitCount);
+          //checking for two pairs
+          //we are not checking for full houses so if there are more than 2 of the same suit, stop checking for two pairs
+          //
+          //existingPair keeps track of the first pair, so check that this pair we're checking is not the pair previously found
+          //if they are not equal, then a second pair has been found
+          if (suitCount > 2)
+          {
+            existingPairIndex = -1;
+            twoPair = false;
+          } //end if
+
+          else if (suitCount == 2)
+          {
+            if ((existingPairIndex != -1) && (strcmp(wSuit[rows[existingPairIndex]], wSuit[rows[i]]) != 0))
+            {
+              twoPair = true;
+            } //end if
+  
+            else
+            {
+              existingPairIndex = i;
+              //strcpy(existingPair, wSuit[rows[i]]);
+              //existingPair = wSuit[rows[i]];
+            } //end else
+          } //end else if
         } //end if
       } //end if
     } //end for
-
     if (suitCount > bestCount)
     {
       bestCount = suitCount;
@@ -45,6 +73,31 @@ void findVal(const char *wFace[], const char *wSuit[], int * rows, int * columns
 
     suitCount = 0;
   } //end for
+
+  if (twoPair)
+  {
+    printf("\n\nYou got two pairs!");
+  } //end if
+
+  else if (bestCount == 5)
+  {
+    printf("\n\nYou got a flush!");
+  } //end else if
+
+  else if (bestCount > 3)
+  {
+    printf("\n\nYou got a four of a kind!");
+  } //end else if
+ 
+  else if (bestCount > 2)
+  {
+    printf("\n\nYou got a three of a kind!");
+  } //end else if
+ 
+  else if (bestCount > 1)
+  {
+    printf("\n\nYou got a pair!");
+  } //end else if 
 } //end findVal
 
 int main(void)
