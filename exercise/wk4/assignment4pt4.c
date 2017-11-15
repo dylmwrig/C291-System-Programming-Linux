@@ -72,6 +72,47 @@ void findVal(const char *wFace[], const char *wSuit[], int * rows, int * columns
     suitCount = 0;
   } //end for
 
+  int minNum = 30, maxNum = -1;
+  bool straight = true; 
+  //check for a straight
+  //columns passes in an array of integers corresponding to indeces in the faces array
+  //so 0 = ace, 1 = 2, etc
+  //meaning that if every number is within 4 digits of each other, there is a straight
+  //first identify the smallest and largest numbers which we'll use to determine if the numbers in the array are in range
+  for (int i = 0; i < CARDS; i++)
+  {
+    if (columns[i] < minNum)
+    {
+      minNum = columns[i];
+    } //end if
+
+    if (columns[i] > maxNum)
+    {
+      maxNum = columns[i];
+    } //end if
+
+    //a straight cannot include two of the same number
+    for (int j = 0; j < CARDS; j++)
+    {
+      if ((columns[i] == columns[j]) && (i != j))
+      {
+        straight = false;
+      } //end if
+    } //end for
+  } //end for
+
+  if (straight)
+  {
+    for (int i = 0; i < CARDS; i++)
+    {
+      if (((columns[i] - minNum) > 4) || ((maxNum - columns[i]) > 4))
+      {
+        straight = false;
+      } //end if
+    } //end for
+  } //end if
+
+  //only print one rank, and print the one which has the highest value
   if (bestCount == 5)
   {
     printf("\n\nYou got a flush!");
@@ -82,6 +123,11 @@ void findVal(const char *wFace[], const char *wSuit[], int * rows, int * columns
     printf("\n\nYou got a four of a kind!");
   } //end else if
  
+  else if (straight)
+  {
+    printf("\n\nYou got a straight!");
+  } //end else if
+
   else if (bestCount > 2)
   {
     printf("\n\nYou got a three of a kind!");
@@ -166,6 +212,7 @@ void deal(unsigned int wDeck[][FACES], const char *wFace[],
          } 
       } 
    }
+
   findVal(wFace, wSuit, rows, columns);
 }
 
