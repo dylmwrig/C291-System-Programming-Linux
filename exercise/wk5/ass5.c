@@ -19,6 +19,7 @@ struct customer
     char state[ 3 ];
     char zipCode[ 6 ];
   } personal;
+//member initialization used for testing
 } customerRecord = { "Castle", "Frank", 10, {"1234123", "In The Hole", "Big Hole", "BIG", "123456"}} , *customerPtr;
 
 int main()
