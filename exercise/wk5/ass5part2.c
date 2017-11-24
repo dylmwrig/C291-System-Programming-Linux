@@ -32,12 +32,12 @@ typedef struct patientRecord
   int height; //inches
   int weight; //pounds
   Date DOB;
-};
+} PatientRecord;
 
 //HealthProfile struct should have accessor methods with pointers to members of patientRecord
 //also have members for BMI, max heart rate, and target-heart-rate range
 //when outputting info for the user, only output properties of this class
-struct HealthProfile
+typedef struct HealthProfile
 {
   bool * malePtr;
   char * lastNamePtr;
@@ -48,9 +48,22 @@ struct HealthProfile
   int maxHeartRate;
   int targetHeartRange;
   float BMI;
-} patientProfile; 
+} PatientProfile; 
 
 int main()
 {
+  PatientRecord patient;
+  PatientProfile profile;
+
+  printf("Enter your first name: ");
+  scanf("%s", &patient.firstName);
+  profile.firstNamePtr = &patient.firstName;
+  printf("%s", *profile.firstNamePtr); 
+
+  printf("\nEnter your height in inches: ");
+  scanf("%d", &patient.height);
+  profile.heightPtr = &patient.height;
+  printf("You entered %d", *profile.heightPtr);
+  profile.firstNamePtr = &patient.firstName;
   return 0;
 } //end main
