@@ -50,20 +50,29 @@ typedef struct HealthProfile
   float BMI;
 } PatientProfile; 
 
-int main()
+void profileInput (PatientProfile * profile)
 {
   PatientRecord patient;
-  PatientProfile profile;
 
   printf("Enter your first name: ");
   scanf("%s", &patient.firstName);
-  profile.firstNamePtr = patient.firstName;
-  printf("%s", profile.firstNamePtr); 
-  //printf("%c", profile.firstNamePtr[0]);
-
+  profile->firstNamePtr = patient.firstName;
+  printf("%s", profile->firstNamePtr); 
+/*
   printf("\nEnter your height in inches: ");
   scanf("%d", &patient.height);
-  profile.heightPtr = &patient.height;
-  printf("You entered %d", *profile.heightPtr);
+  profile->heightPtr = &patient.height;
+  printf("You entered %d", *profile->heightPtr);
+*/
+} //end profileInput
+
+int main()
+{
+  PatientProfile profile;
+  PatientProfile * profilePtr = &profile;
+
+  profileInput(profilePtr);
+  printf("Outside of profileInput, first name: %s", profilePtr->firstNamePtr);  
+
   return 0;
 } //end main
