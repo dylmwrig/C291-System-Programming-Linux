@@ -57,13 +57,13 @@ int main()
 
   printf("Enter your first name: ");
   scanf("%s", &patient.firstName);
-  profile.firstNamePtr = &patient.firstName;
-  printf("%s", *profile.firstNamePtr); 
+  profile.firstNamePtr = patient.firstName;
+  printf("%s", profile.firstNamePtr); 
+  //printf("%c", profile.firstNamePtr[0]);
 
   printf("\nEnter your height in inches: ");
   scanf("%d", &patient.height);
   profile.heightPtr = &patient.height;
   printf("You entered %d", *profile.heightPtr);
-  profile.firstNamePtr = &patient.firstName;
   return 0;
 } //end main
