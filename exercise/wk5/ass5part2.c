@@ -100,55 +100,52 @@ void targetHeartRange(int maxRate, int * heartRange)
 //return the patient's BMI
 float BMICalc(int height, int weight)
 {
-  return ((weight * 703) / (height * height));
+  return ((weight * 703.0) / (height * height));
 } //end BMICalc
 
-void profileInput (PatientProfile * profile)
+void profileInput (PatientProfile * profile, PatientRecord * patient, Date * DOB)
 {
-  PatientRecord patient;
-  Date DOB;
-
   printf("Enter your first name: ");
-  scanf("%s", &patient.firstName);
-  profile->firstNamePtr = patient.firstName;
+  scanf("%s", &(patient->firstName));
+  profile->firstNamePtr = patient->firstName;
   
   printf("\nEnter your last name: ");
-  scanf("%s", &patient.lastName);
-  profile->lastNamePtr = patient.lastName;
+  scanf("%s", &(patient->lastName));
+  profile->lastNamePtr = patient->lastName;
 
   int genderInput;
   printf("\nAre you male or female? 1 for male, 2 for female: ");
   scanf("%d", &genderInput);
   if (genderInput == 1)
   {
-    patient.male = true;
+    patient->male = true;
   } //end if 
 
   else
   {
-    patient.male = false;
+    patient->male = false;
   } //end else
-  profile->malePtr = &patient.male;
+  profile->malePtr = &(patient->male);
 
   printf("\nEnter your month of birth: ");
-  scanf("%d", &DOB.month);
+  scanf("%d", &(DOB->month));
 
   printf("\nEnter your day of birth: ");
-  scanf("%d", &DOB.day);
+  scanf("%d", &(DOB->day));
 
   printf("\nEnter your year of birth: ");
-  scanf("%d", &DOB.year);
+  scanf("%d", &(DOB->year));
 
-  patient.DOB = DOB;
-  profile->DOBPtr = &patient.DOB;
+  patient->DOB = *DOB;
+  profile->DOBPtr = &(patient->DOB);
 
   printf("\nEnter your height in inches: ");
-  scanf("%d", &patient.height);
-  profile->heightPtr = &patient.height;
+  scanf("%d", &(patient->height));
+  profile->heightPtr = &(patient->height);
 
   printf("\nEnter your weight in pounds: ");
-  scanf("%d", &patient.weight);
-  profile->weightPtr = &patient.weight;
+  scanf("%d", &(patient->weight));
+  profile->weightPtr = &(patient->weight);
 
   profile->age = currentAge(*(profile->DOBPtr));
   profile->maxHeartRate = maxHeartRate(profile->age);
@@ -160,12 +157,16 @@ int main()
 {
   PatientProfile profile;
   PatientProfile * profilePtr = &profile; //pointer just used to alter the profile instance
+  PatientRecord patient;
+  PatientRecord * patientPtr = &patient; 
+  Date DOB;
+  Date * DOBPtr = &DOB;
 
-  profileInput(profilePtr);
+  profileInput(profilePtr, patientPtr, DOBPtr);
   printf("Outside of profileInput, first name: %s", profilePtr->firstNamePtr);  
   printf("\n\n\t\tResults\n\n");
-  printf("First name: %s", *(profile.firstNamePtr));
-  printf("\nLast name: %s", *(profile.lastNamePtr));
+  printf("First name: %s", profile.firstNamePtr);
+  printf("\nLast name: %s", profile.lastNamePtr);
   
   //convert the boolean "male" to a printable string
   //I'm using strcpy to create printable values for some of the data
