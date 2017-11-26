@@ -46,4 +46,8 @@ typedef struct well {
 well_t *init_well(int, int, int, int);
 void draw_well(well_t *);
 
+well_t *changeWellSize(int upper_left_x, int upper_left_y, int width, int height, well_t *);
+
+void undraw_well(well_t *);
+
 /* well.h ends here */
