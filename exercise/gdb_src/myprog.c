@@ -15,7 +15,9 @@ void initialize_alphabet(char *a) {
 void reverse_print_alpha(char *b) {
   static var = 0;
   char *p;
-  var?(p=NULL):(p=b);
+  p = b;
+  //original problem line
+  //var?(p=NULL):(p=b);
   var ^= 1;
   initialize_alphabet(p);
   for (p=(b+MAX_LETTERS-1);p>=b;p--) {
