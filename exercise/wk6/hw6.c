@@ -71,7 +71,34 @@ void printLetters(int phoneNum[7], int indexes[7])
     } //end switch
     printf("%c",c[indexes[i]]);
   } //end for
+  printf("\n";
 } //end printLetters
+
+//permute a list of digits between 0 and 3 
+//to determine the index of the character used in the printLetters function above
+//phoneNum is a parameter so we can call printLetters, and so we know the max index size (2 or 3)
+//have a "stable number" which will start on the far left of the array
+//
+//through an iteration of a loop, the number will not change but every single other one will iterate
+//do this in sequential order: ie ind[1] should increase, then the number after that, until all are max index
+//when every other number is max index, increase the stable number
+//when this stable number reaches the max index (3 if # is 7 or 9, 2 otherwise)
+//make the next index the next stable number, and continue until the final index is both the stable number and has reached its max index
+void permute(int phoneNum[7])
+{
+  int stableIndex = 0, i, j, maxIndex; //maxIndex is either 2 or 3 depending on if the # is 7, 9, or anything else
+  int ind[7] = {0};
+  
+  //index array is initialized to all zeroes so call printLetters immediately
+  printLetters(phoneNum, ind);
+  while (1)
+  {
+    if (ind[stableIndex] > maxIndex)
+    {
+      stableIndex++;
+    } //end if
+  } //end while 
+} //end permute
 
 int main()
 {
@@ -97,7 +124,6 @@ int main()
       return 0;
     } //end if
   } //end for
-
   
   return 0;
 } //end main
