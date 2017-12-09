@@ -47,6 +47,19 @@ void init_game(void) {
   int x,y;
 }
 
+//display and undisplay time
+void display_time(double time, int x, int y) {
+  mvprintw(y,x,"***  TIME ***");
+  mvprintw(y+1,x,"%f",time/CLOCKS_PER_SEC);
+}
+
+void undisplay_time(double time, int x, int y) {
+  mvprintw(y,x,"             ");
+  mvprintw(y+1,x,"        ");
+}
+
+
+
 highscore_t *game(highscore_t *highscores) {
   static int state = INIT;
   tetromino_t *next = NULL;
@@ -66,6 +79,7 @@ highscore_t *game(highscore_t *highscores) {
   int lines_cleared = 0;
   int score = 0;
   char str[80];  
+  clock_t startTime, curTime;
 
   while(1) {
     switch(state) {
@@ -77,7 +91,9 @@ highscore_t *game(highscore_t *highscores) {
       w = init_well(((x/2)-(WELL_WIDTH/2)),3,WELL_WIDTH,WELL_HEIGHT);
       draw_well(w);
       srand(time(NULL));     // Seed the random number generator with the time. Used in create tet. 
+      startTime = clock();
       display_score(score, w->upper_left_x-15,w->upper_left_y);  
+      display_time(curTime, w->upper_left_x-15,w->upper_left_y+3);
       state = ADD_PIECE;
       break;
     case ADD_PIECE:          // Add a new piece to the game
@@ -89,11 +105,16 @@ highscore_t *game(highscore_t *highscores) {
 	current = create_tetromino ((w->upper_left_x+(w->width/2)), w->upper_left_y);
 	next = create_tetromino ((w->upper_left_x+(w->width/2)), w->upper_left_y);
       }
+
+      //if collision is happening before the user can move the piece, game over
+      if (check_collision(current) == COLLIDE){
+        state = GAME_OVER;
+        break;
+      }      
       display_tetromino(current);
       state = MOVE_PIECE;
       break;
     case MOVE_PIECE:     // Move the current piece 
-
       if ((arrow = read_escape(&c)) != NOCHAR) {
 	switch (arrow) {
 	case UP:
@@ -141,6 +162,10 @@ highscore_t *game(highscore_t *highscores) {
           } 
 	  break;
 
+        case PAUSE:
+          state = PAUSED;
+          break;
+
 	case REGCHAR: 
 	  mvprintw(10,10,"REGCHAR 0x%02x",c);
           if (c == ' ') {
@@ -170,14 +195,35 @@ highscore_t *game(highscore_t *highscores) {
       getmaxyx(stdscr,y,x);
       mvprintw(1,x/2-5,"  GAME_OVER  ");
       mvprintw(2,x/2-5,"#############");
+      mvprintw(3,x/2-5,"  YOUR SCORE ");
+      mvprintw(4,x/2-5,"     %d      ", score);
       mvprintw(16,x/2-5,"Hit q to exit");
       getch(); // Wait for a key to be pressed. 
       state = EXIT;
+      break;
+
+    case PAUSED:
+      if ((arrow = read_escape(&c)) != NOCHAR) {
+        if (arrow == PAUSE){
+          state = MOVE_PIECE;
+        }
+      }
       break;
     case EXIT:
       return(highscores);  // Return the highscore structure back to main to be stored on disk. 
       break;
     }
+
+    curTime = clock();
+    double printTime = (double)curTime - (double)startTime;
+    display_time(printTime, w->upper_left_x-15,w->upper_left_y+3);
+
+    int linesRemoved = prune_well(w);
+    if (linesRemoved > 0)
+    {
+      score = compute_score(score, linesRemoved);
+      display_score(score, w->upper_left_x-15,w->upper_left_y);  
+    } //end if
     refresh();
     nanosleep(&tim,&tim_ret);
   }

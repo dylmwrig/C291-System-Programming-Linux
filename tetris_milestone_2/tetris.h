@@ -34,8 +34,8 @@
 
 /* Code: */
 
-#define WELL_WIDTH 38
-#define WELL_HEIGHT 33
+#define WELL_WIDTH 25
+#define WELL_HEIGHT 22
 
 #define BASE_FALL_RATE 500
 #define DROP_RATE 10
