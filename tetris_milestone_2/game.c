@@ -48,17 +48,15 @@ void init_game(void) {
 }
 
 //display and undisplay time
-void display_time(double time, int x, int y) {
+void display_time(float time, int x, int y) {
   mvprintw(y,x,"***  TIME ***");
-  mvprintw(y+1,x,"%f",time/CLOCKS_PER_SEC);
+  mvprintw(y+1,x,"%f",time);
 }
 
-void undisplay_time(double time, int x, int y) {
+void undisplay_time(int x, int y) {
   mvprintw(y,x,"             ");
   mvprintw(y+1,x,"        ");
 }
-
-
 
 highscore_t *game(highscore_t *highscores) {
   static int state = INIT;
@@ -78,8 +76,9 @@ highscore_t *game(highscore_t *highscores) {
   int currentWellWidth = WELL_WIDTH;
   int lines_cleared = 0;
   int score = 0;
+  float timeInMS = 0.0f;
+  const float MAX_TIME = 300.0f; //game over when timeInMS >= MAX_TIME
   char str[80];  
-  clock_t startTime, curTime;
 
   while(1) {
     switch(state) {
@@ -91,9 +90,7 @@ highscore_t *game(highscore_t *highscores) {
       w = init_well(((x/2)-(WELL_WIDTH/2)),3,WELL_WIDTH,WELL_HEIGHT);
       draw_well(w);
       srand(time(NULL));     // Seed the random number generator with the time. Used in create tet. 
-      startTime = clock();
       display_score(score, w->upper_left_x-15,w->upper_left_y);  
-      display_time(curTime, w->upper_left_x-15,w->upper_left_y+3);
       state = ADD_PIECE;
       break;
     case ADD_PIECE:          // Add a new piece to the game
@@ -213,10 +210,16 @@ highscore_t *game(highscore_t *highscores) {
       return(highscores);  // Return the highscore structure back to main to be stored on disk. 
       break;
     }
-
-    curTime = clock();
-    double printTime = (double)curTime - (double)startTime;
-    display_time(printTime, w->upper_left_x-15,w->upper_left_y+3);
+    if (state != PAUSED){
+      timeInMS += 0.001; //loop is 1ms long
+      display_time(timeInMS, w->upper_left_x-15,w->upper_left_y+3);
+  
+      //game is over when 5 minutes have passed
+      //if you want more or less time, just adjust the MAX_TIME var
+      if (timeInMS >= MAX_TIME){
+        state = GAME_OVER;
+      }
+    }
 
     int linesRemoved = prune_well(w);
     if (linesRemoved > 0)
