@@ -69,9 +69,10 @@ void printLetters(int phoneNum[7], int indexes[7], FILE * file)
         c[3] = 'Z';
         break;
     } //end switch
-    //fprintf(file, "%c",c[indexes[i]]);
+    fprintf(file, "%c",c[indexes[i]]);
     printf("%c",c[indexes[i]]);
   } //end for
+  fprintf(file, "\n");
   printf("\n");
 } //end printLetters
 
@@ -116,10 +117,10 @@ void resetArr(int a[7], int dontReset1, int dontReset2)
 void permute(int phoneNum[7], FILE * file)
 {
   int i, j, maxIndex; //maxIndex is either 2 or 3 depending on if the # is 7, 9, or anything else
-  int stableIndex = 0, dontReset = 0, stableMaxIndex = findMaxIndex(phoneNum[stableIndex]);
+  int stableIndex = 0, dontReset = 0, stableMaxIndex = findMaxIndex(phoneNum[0]);
   int ind[7] = {0};
   int incIndex = 1; //index of the element which will be changed 
- 
+
   //index array is initialized to all zeroes so call printLetters immediately
   printLetters(phoneNum, ind, file);
   while (1)
@@ -133,6 +134,8 @@ void permute(int phoneNum[7], FILE * file)
       //increase the stableIndex val by one, and start the incrementer at the far left
       if (incIndex + 1 == 7)
       {
+        /*
+      //code snippet I added which eventually broken my program
         if (stableIndex == dontReset)
         {
           resetArr(ind, stableIndex, stableIndex);
@@ -141,6 +144,7 @@ void permute(int phoneNum[7], FILE * file)
 
         else
         {
+        
           maxIndex = findMaxIndex(phoneNum[ind[dontReset]]);
           if (ind[dontReset] + 1 > maxIndex)
           {
@@ -165,32 +169,39 @@ void permute(int phoneNum[7], FILE * file)
             resetArr(ind, stableIndex, dontReset);
           } //end else
         } //end else
+        */
 
         //if the stableIndex value is both at its max value and at the end of the array
         //we have processed the entire thing
         //
         //if we haven't processed the entire thing, find the new max index of that value and keep going
-        if (ind[stableIndex] > stableMaxIndex)
+        if (ind[stableIndex] + 1 >= stableMaxIndex)
         {
           ind[stableIndex]--;
           stableIndex++;
-          if (stableIndex == 7)
+          if (stableIndex >= 7)
           {
             break;
           } //end if
 
           else
           {
-            dontReset = 0;
+            //dontReset = 0;
             resetArr(ind, stableIndex, stableIndex);
             stableMaxIndex = findMaxIndex(phoneNum[stableIndex]);
           } //end else
         } //end if
+ 
+        else
+        {
+          ind[stableIndex]++;
+          resetArr(ind, stableIndex, stableIndex);
+        } //end else
       } //end if
 
       else
       {  
-        while ((incIndex == stableIndex) || (incIndex == dontReset))
+        while (incIndex == stableIndex) //|| (incIndex == dontReset))
         {
           incIndex++; 
         } //end while
@@ -226,8 +237,6 @@ int main()
     printf("File did not open properly, now exiting");
     return 0;
   }
-
-  fclose(file);
   
   printf("Please enter 7 single digits separated by returns\n");
   int num[7];
